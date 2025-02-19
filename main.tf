@@ -1,4 +1,4 @@
-```terraform
+
 provider "google" {
   project = var.project_id
   region  = var.region
@@ -7,7 +7,6 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    # Empty block - values will be loaded from backend.hcl
   }
 }
 
@@ -47,4 +46,3 @@ module "monitoring" {
   
   notification_channels = var.notification_channels
 }
-```

@@ -1,4 +1,4 @@
-```terraform
+
 # Project settings
 project_id = "playground-s-11-f902f813"
 region     = "us-central1"
@@ -31,5 +31,5 @@ enable_monitoring = true
 cpu_alert_threshold = 0.8
 memory_alert_threshold = 0.8
 notification_channels = []
-```
+``
 

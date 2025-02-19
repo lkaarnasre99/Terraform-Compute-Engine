@@ -1,4 +1,4 @@
-``terraform
+
 variable "instance_name" {
   description = "The name of the VM instance"
   type        = string
@@ -126,4 +126,3 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
-```

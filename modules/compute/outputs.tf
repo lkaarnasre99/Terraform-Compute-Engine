@@ -1,4 +1,4 @@
-```terraform
+
 output "instance_id" {
   description = "The ID of the VM instance"
   value       = google_compute_instance.vm_instance.id
@@ -23,4 +23,3 @@ output "self_link" {
   description = "The self link of the VM instance"
   value       = google_compute_instance.vm_instance.self_link
 }
-```

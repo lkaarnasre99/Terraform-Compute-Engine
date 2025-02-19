@@ -1,4 +1,4 @@
-```terraform
+
 resource "google_monitoring_alert_policy" "cpu_usage" {
   display_name = "${var.instance_name}-high-cpu-usage"
   combiner     = "OR"
@@ -108,4 +108,3 @@ resource "google_monitoring_dashboard" "vm_dashboard" {
 }
 EOF
 }
-```

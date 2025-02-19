@@ -1,4 +1,4 @@
-```terraform
+
 resource "google_compute_instance" "vm_instance" {
   name         = var.instance_name
   machine_type = var.machine_type
@@ -58,4 +58,3 @@ resource "google_compute_firewall" "http_firewall" {
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["http-server"]
 }
-```

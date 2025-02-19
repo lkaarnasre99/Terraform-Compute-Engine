@@ -1,4 +1,4 @@
-```terraform
+
 # Project variables
 variable "project_id" {
   description = "The GCP project ID"
@@ -115,4 +115,3 @@ variable "notification_channels" {
   type        = list(string)
   default     = []
 }
-```

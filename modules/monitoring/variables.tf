@@ -1,4 +1,4 @@
-```terraform
+
 variable "instance_name" {
   description = "The name of the VM instance"
   type        = string
@@ -44,4 +44,3 @@ output "dashboard_id" {
   description = "The ID of the VM dashboard"
   value       = google_monitoring_dashboard.vm_dashboard.id
 }
-```
