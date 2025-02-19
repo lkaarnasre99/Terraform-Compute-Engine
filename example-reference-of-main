@@ -1,0 +1,17 @@
+## Usage Example
+```terraform
+module "lamp_server" {
+  source       = "path/to/terraform-gcp-lamp"
+  
+  project_id   = "my-gcp-project"
+  region       = "us-central1"
+  zone         = "us-central1-a"
+  
+  instance_name = "lamp-1-vm"
+  machine_type  = "e2-medium"
+  
+  enable_monitoring = true
+  notification_channels = ["projects/my-project/notificationChannels/channel-id"]
+}
+```  
+  
