@@ -71,10 +71,10 @@ steps:
 
 # Configuration variables
 substitutions:
-  _BUCKET_NAME: your-terraform-state-bucket # replace with your bucket name
+  _BUCKET_NAME: tf-compute-state # replace with your bucket name
 
 # Timeout setting
-timeout: 1200s
+timeout: 3600s
 
 # Store logs in Cloud Storage
 options:
