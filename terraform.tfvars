@@ -1,6 +1,6 @@
 ```terraform
 # Project settings
-project_id = "your-project-id"
+project_id = "playground-s-11-f902f813"
 region     = "us-central1"
 zone       = "us-central1-a"
 
