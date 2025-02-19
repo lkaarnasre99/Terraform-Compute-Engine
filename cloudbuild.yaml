@@ -76,6 +76,9 @@ substitutions:
 # Timeout setting
 timeout: 3600s
 
+# Specify logs bucket location
+logs_bucket: 'gs://${_BUCKET_NAME}/logs'
+
 # Store logs in Cloud Storage
 options:
   logging: GCS_ONLY
