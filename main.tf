@@ -5,6 +5,12 @@ provider "google" {
   zone    = var.zone
 }
 
+terraform {
+  backend "gcs" {
+    # Empty block - values will be loaded from backend.hcl
+  }
+}
+
 module "lamp_vm" {
   source          = "./modules/compute"
   instance_name   = var.instance_name

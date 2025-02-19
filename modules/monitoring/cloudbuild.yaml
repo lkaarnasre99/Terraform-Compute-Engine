@@ -1,0 +1,32 @@
+steps:
+  # Init with backend config
+  - name: 'hashicorp/terraform:1.5.7'
+    id: 'tf-init'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform init -backend-config=backend.hcl
+
+  # Validate
+  - name: 'hashicorp/terraform:1.5.7'
+    id: 'tf-validate'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform validate
+
+  # Plan
+  - name: 'hashicorp/terraform:1.5.7'
+    id: 'tf-plan'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform plan -out=tfplan
+
+substitutions:
+  _BUCKET_NAME: your-terraform-state-bucket
+
+timeout: 1200s
