@@ -26,10 +26,10 @@ variable "notification_channels" {
   type        = list(string)
   default     = []
 }
-```
+
 
 ## Module: monitoring/outputs.tf
-```terraform
+
 output "cpu_alert_policy_id" {
   description = "The ID of the CPU alert policy"
   value       = google_monitoring_alert_policy.cpu_usage.id
