@@ -19,19 +19,16 @@ variable "zone" {
 variable "instance_name" {
   description = "The name of the VM instance"
   type        = string
-  default     = "lamp-1-vm"
 }
 
 variable "machine_type" {
   description = "The machine type for the VM"
   type        = string
-  default     = "e2-medium"
 }
 
 variable "boot_disk_image" {
   description = "The boot disk image to use"
   type        = string
-  default     = "debian-cloud/debian-12"
 }
 
 variable "network" {
@@ -55,7 +52,7 @@ variable "create_firewall_rules" {
 variable "additional_network_tags" {
   description = "Additional network tags to apply to the VM"
   type        = list(string)
-  default     = []
+
 }
 
 variable "service_account_email" {
