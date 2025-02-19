@@ -1,5 +1,29 @@
+# Cloud Build configuration for Terraform plan with provided service account
 steps:
-  # Init with backend config
+  # Get credentials from Secret Manager
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'get-credentials'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud secrets versions access latest --secret=terraform-sa-key > sa-key.json
+        chmod 600 sa-key.json
+
+  # Create backend.hcl file
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'create-backend-config'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        cat > backend.hcl << EOF
+        bucket         = "${_BUCKET_NAME}"
+        prefix         = "terraform/state"
+        credentials    = "sa-key.json"
+        EOF
+
+  # Initialize Terraform with backend configuration
   - name: 'hashicorp/terraform:1.5.7'
     id: 'tf-init'
     entrypoint: 'sh'
@@ -8,7 +32,7 @@ steps:
       - |
         terraform init -backend-config=backend.hcl
 
-  # Validate
+  # Validate Terraform configuration
   - name: 'hashicorp/terraform:1.5.7'
     id: 'tf-validate'
     entrypoint: 'sh'
@@ -17,16 +41,43 @@ steps:
       - |
         terraform validate
 
-  # Plan
+  # Generate Terraform plan
   - name: 'hashicorp/terraform:1.5.7'
     id: 'tf-plan'
     entrypoint: 'sh'
+    env:
+      - 'GOOGLE_APPLICATION_CREDENTIALS=sa-key.json'
     args:
       - '-c'
       - |
         terraform plan -out=tfplan
 
-substitutions:
-  _BUCKET_NAME: your-terraform-state-bucket
+  # Save plan to GCS bucket
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'save-plan'
+    args:
+      - 'cp'
+      - 'tfplan'
+      - 'gs://${_BUCKET_NAME}/plans/${BUILD_ID}/tfplan'
+    
+  # Clean up credentials
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'cleanup-credentials'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        rm sa-key.json
 
+# Configuration variables
+substitutions:
+  _BUCKET_NAME: your-terraform-state-bucket # replace with your bucket name
+
+# Timeout setting
 timeout: 1200s
+
+# Store logs in Cloud Storage
+options:
+  logging: GCS_ONLY
+  logStreamingOption: STREAM_ON
+  logsBucket: 'gs://${_BUCKET_NAME}/logs'
