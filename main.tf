@@ -48,4 +48,5 @@ module "monitoring" {
   network_threshold = var.network_alert_threshold
   
   notification_channels = var.notification_channels
+  instance_self_link = module.lamp_vm.self_link
 }

@@ -43,6 +43,13 @@ variable "network_threshold" {
   default     = 500000  # 500KB/s
 }
 
+
+variable "instance_self_link" {
+  description = "Self link for the VM instance"
+  type        = string
+}
+
+
 # Make sure these existing variables are present
 # variable "instance_name" - already exists
 # variable "instance_id" - already exists

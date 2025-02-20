@@ -125,13 +125,9 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime" {
     validate_ssl   = false
   }
 
-  monitored_resource {
-    type = "gce_instance"
-    labels = {
-      project_id  = var.project_id
-      instance_id = var.instance_id
-      zone        = var.zone
-    }
+  resource_group {
+    resource_type = "INSTANCE"
+    group_id      = var.instance_self_link
   }
 }
 
