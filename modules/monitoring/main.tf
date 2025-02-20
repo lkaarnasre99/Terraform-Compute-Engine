@@ -144,7 +144,7 @@ resource "google_monitoring_alert_policy" "uptime_alert" {
     condition_monitoring_query_language {
       query = <<-EOT
         fetch uptime_url
-        | filter resource.instance_id == '${var.instance_id}'
+        | filter metric.resource.instance_id == '${var.instance_id}'
         | filter metric.check_id == '${google_monitoring_uptime_check_config.lamp_uptime.uptime_check_id}'
         | filter metric.type == 'monitoring.googleapis.com/uptime_check/check_passed'
         | align next_older(1m)
