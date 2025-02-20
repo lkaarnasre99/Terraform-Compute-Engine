@@ -115,3 +115,9 @@ variable "notification_channels" {
   type        = list(string)
   default     = []
 }
+
+variable "network_alert_threshold" {
+  description = "Network threshold for alert (bytes/s)"
+  type        = number
+  default     = 500000  # 500KB/s
+}

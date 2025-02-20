@@ -27,4 +27,25 @@ variable "notification_channels" {
   default     = []
 }
 
+variable "project_id" {
+  description = "The GCP project ID"
+  type        = string
+}
+
+variable "zone" {
+  description = "The zone where the VM instance is deployed"
+  type        = string
+}
+
+variable "network_threshold" {
+  description = "Network traffic threshold for alert (bytes/s)"
+  type        = number
+  default     = 500000  # 500KB/s
+}
+
+# Make sure these existing variables are present
+# variable "instance_name" - already exists
+# variable "instance_id" - already exists
+# variable "notification_channels" - already exists
+
 
