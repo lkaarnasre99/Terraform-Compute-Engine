@@ -121,3 +121,8 @@ variable "network_alert_threshold" {
   type        = number
   default     = 500000  # 500KB/s
 }
+
+variable "admin_email" {
+  description = "Email address for alert notifications"
+  type        = string
+}

@@ -50,6 +50,11 @@ variable "network_threshold" {
 }
 
 
+variable "admin_email" {
+  description = "Email address for alert notifications"
+  type        = string
+}
+
 # Make sure these existing variables are present
 # variable "instance_name" - already exists
 # variable "instance_id" - already exists

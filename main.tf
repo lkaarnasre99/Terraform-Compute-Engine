@@ -48,5 +48,5 @@ module "monitoring" {
   network_threshold = var.network_alert_threshold
   
   notification_channels = var.notification_channels
-  instance_nat_ip = module.lamp_vm.instance_nat_ip
+  admin_email = var.admin_email
 }
