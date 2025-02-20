@@ -22,6 +22,7 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime_check" {
 
 resource "google_monitoring_alert_policy" "inbound_traffic_alert" {
   display_name = "Inbound Traffic Alert"
+  notification_channels = [google_monitoring_notification_channel.email.id]
   combiner     = "OR"
   
   conditions {
@@ -61,10 +62,7 @@ resource "google_monitoring_notification_channel" "email" {
 }
 
 
-resource "google_monitoring_alert_policy" "inbound_traffic_alert" {
-  # other configuration...
-  notification_channels = [google_monitoring_notification_channel.email.id]
-}
+
 
 
 resource "google_monitoring_dashboard" "lamp_qwik_start_dashboard" {
