@@ -22,7 +22,7 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime_check" {
 
 resource "google_monitoring_alert_policy" "inbound_traffic_alert" {
   display_name = "Inbound Traffic Alert"
-  notification_channels = [google_monitoring_notification_channel.email.id]
+
   combiner     = "OR"
   
   conditions {
@@ -40,7 +40,7 @@ resource "google_monitoring_alert_policy" "inbound_traffic_alert" {
     }
   }
 
-  notification_channels = var.notification_channels
+  notification_channels = [google_monitoring_notification_channel.email.id]
   
   documentation {
     content   = "High inbound network traffic detected on ${var.instance_name}. Network traffic has exceeded the 500 bytes/s threshold."
