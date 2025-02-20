@@ -1,4 +1,3 @@
-
 resource "google_compute_instance" "vm_instance" {
   name         = var.instance_name
   machine_type = var.machine_type
@@ -23,7 +22,8 @@ resource "google_compute_instance" "vm_instance" {
 
   metadata = merge(
     {
-      ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key_file)}"
+      enable-oslogin = "TRUE"
+      # SSH keys removed in favor of OS Login
     },
     var.additional_metadata
   )
@@ -43,6 +43,14 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   allow_stopping_for_update = true
+}
+
+# Grant OS Login permissions to the service account if provided
+resource "google_project_iam_member" "service_account_os_login" {
+  count   = var.service_account_email != "" ? 1 : 0
+  project = var.project_id
+  role    = "roles/compute.osLogin"
+  member  = "serviceAccount:${var.service_account_email}"
 }
 
 resource "google_compute_firewall" "http_firewall" {
