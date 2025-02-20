@@ -1,85 +1,31 @@
-# Cloud Build configuration for Terraform plan with provided service account
 steps:
-  # Get credentials from Secret Manager
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: 'get-credentials'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        gcloud secrets versions access latest --secret=terraform-sa-key > sa-key.json
-        chmod 600 sa-key.json
+# Initialize Terraform
+- name: 'hashicorp/terraform:1.5.7'
+  id: 'tf-init'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    terraform init -backend-config=backend.hcl
 
-  # Create backend.hcl file
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: 'create-backend-config'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        cat > backend.hcl << EOF
-        bucket         = "${_BUCKET_NAME}"
-        prefix         = "terraform/state"
-        credentials    = "sa-key.json"
-        EOF
+# Validate Terraform configuration
+- name: 'hashicorp/terraform:1.5.7'
+  id: 'tf-validate'
+  args: ['validate']
 
-  # Initialize Terraform with backend configuration
-  - name: 'hashicorp/terraform:1.5.7'
-    id: 'tf-init'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        terraform init -backend-config=backend.hcl
+# Plan Terraform changes
+- name: 'hashicorp/terraform:1.5.7'
+  id: 'tf-plan'
+  args: ['plan', '-var-file=terraform.tfvars', '-out=tfplan']
 
-  # Validate Terraform configuration
-  - name: 'hashicorp/terraform:1.5.7'
-    id: 'tf-validate'
-    entrypoint: 'sh'
-    args:
-      - '-c'
-      - |
-        terraform validate
+# Apply Terraform changes
+- name: 'hashicorp/terraform:1.5.7'
+  id: 'tf-apply'
+  args: ['apply', '-auto-approve', 'tfplan']
 
-  # Generate Terraform plan
-  - name: 'hashicorp/terraform:1.5.7'
-    id: 'tf-plan'
-    entrypoint: 'sh'
-    env:
-      - 'GOOGLE_APPLICATION_CREDENTIALS=sa-key.json'
-    args:
-      - '-c'
-      - |
-        terraform plan -out=tfplan
+# Set timeout for the build
+timeout: '1800s'  # 30 minutes
 
-  # Save plan to GCS bucket
-  - name: 'gcr.io/cloud-builders/gsutil'
-    id: 'save-plan'
-    args:
-      - 'cp'
-      - 'tfplan'
-      - 'gs://${_BUCKET_NAME}/plans/${BUILD_ID}/tfplan'
-    
-  # Clean up credentials
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: 'cleanup-credentials'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        rm sa-key.json
-
-# Configuration variables
-substitutions:
-  _BUCKET_NAME: tf-compute-state # replace with your bucket name
-
-# Timeout setting
-timeout: 3600s
-
-# Specify logs bucket location
-#logs_bucket: 'gs://${_BUCKET_NAME}/logs'
-
-# Store logs in Cloud Storage
+# Configure required permissions for the Cloud Build service account
 options:
   logging: CLOUD_LOGGING_ONLY
-  logStreamingOption: STREAM_ON
