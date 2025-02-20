@@ -31,5 +31,5 @@ enable_monitoring = true
 cpu_alert_threshold = 0.8
 memory_alert_threshold = 0.8
 notification_channels = []
-``
+
 
