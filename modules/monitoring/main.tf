@@ -125,9 +125,12 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime" {
     validate_ssl   = false
   }
 
-  resource_group {
-    resource_type = "INSTANCE"
-    group_id      = var.instance_self_link
+ monitored_resource {
+    type = "uptime_url"
+    labels = {
+      host       = var.instance_nat_ip
+      project_id = var.project_id
+    }
   }
 }
 

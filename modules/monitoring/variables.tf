@@ -44,8 +44,8 @@ variable "network_threshold" {
 }
 
 
-variable "instance_self_link" {
-  description = "Self link for the VM instance"
+ variable "instance_nat_ip" {
+  description = "Public IP address of the VM instance"
   type        = string
 }
 
