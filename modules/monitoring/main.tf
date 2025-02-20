@@ -143,14 +143,16 @@ resource "google_monitoring_alert_policy" "uptime_alert" {
   conditions {
     display_name = "Uptime check failed"
     condition_monitoring_query_language {
-      query = "fetch uptime_url
+      query = <<EOT 
+      fetch uptime_url
                | filter resource.instance_id == '${var.instance_id}'
                | filter metric.check_id == '${google_monitoring_uptime_check_config.lamp_uptime.uptime_check_id}'
                | filter metric.type == 'monitoring.googleapis.com/uptime_check/check_passed'
                | align next_older(1m)
                | every 1m
                | group_by [resource.instance_id], [value_check_passed: count_true(value.check_passed)]
-               | condition val() < 1"
+               | condition val() < 1
+               EOT
       duration = "60s"
       trigger {
         count = 1
