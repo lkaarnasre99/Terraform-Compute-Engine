@@ -31,5 +31,6 @@ enable_monitoring = true
 cpu_alert_threshold = 0.8
 memory_alert_threshold = 0.8
 notification_channels = []
+admin_email = "ckrai8989@gmail.com"
 
 
