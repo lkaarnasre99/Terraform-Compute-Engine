@@ -2,11 +2,14 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime_check" {
   display_name = "Lamp Uptime Check"
   timeout      = "10s"
   period       = "60s"  # 1 minute check frequency
+
+  selected_regions = ["USA"]
   
   http_check {
     path           = "/"
     port           = "80"
     request_method = "GET"
+    use_ssl = false
     validate_ssl   = false
   }
   
