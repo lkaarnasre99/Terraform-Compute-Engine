@@ -62,9 +62,6 @@ resource "google_monitoring_notification_channel" "email" {
 }
 
 
-
-
-
 resource "google_monitoring_dashboard" "lamp_qwik_start_dashboard" {
   dashboard_json = <<EOF
 {
