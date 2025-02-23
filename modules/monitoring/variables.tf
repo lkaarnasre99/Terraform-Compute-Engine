@@ -6,7 +6,7 @@ variable "instance_name" {
 
 variable "instance_id" {
   description = "The ID of the VM instance"
-  type        = number
+  type        = string
 }
 
 variable "cpu_threshold" {

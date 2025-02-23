@@ -23,8 +23,13 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime_check" {
 
   monitored_resource {
     type = "gce_instance"    # Resource Type = Instance
+
     labels = {
-      instance_id = var.instance_id
+      instance_id = format("qwiklabs-gcp-03-4e66da73d688/%s/zones/%s/instances/%s", 
+        var.project_id,
+        var.zone,
+        var.instance_name
+      )
       zone = var.zone
       project_id = var.project_id
     }
