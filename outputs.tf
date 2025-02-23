@@ -14,8 +14,4 @@ output "vm_private_ip" {
   value       = module.lamp_vm.instance_private_ip
 }
 
-output "vm_self_link" {
-  description = "The self link of the VM instance"
-  value       = module.lamp_vm.self_link
-}
 

@@ -42,6 +42,7 @@ module "monitoring" {
   instance_id   = module.lamp_vm.instance_id
   project_id    = var.project_id
   zone          = var.zone
+  nat_ip        = module.lamp_vm.instance_nat_ip
   
   cpu_threshold    = var.cpu_alert_threshold
   memory_threshold = var.memory_alert_threshold

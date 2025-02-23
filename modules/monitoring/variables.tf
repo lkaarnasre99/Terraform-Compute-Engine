@@ -15,11 +15,6 @@ variable "cpu_threshold" {
   default     = 0.8
 }
 
-variable "memory_threshold" {
-  description = "Memory threshold for alert (between 0 and 1)"
-  type        = number
-  default     = 0.8
-}
 
 variable "notification_channels" {
   description = "List of notification channel IDs"
@@ -47,6 +42,11 @@ variable "network_threshold" {
 variable "admin_email" {
   description = "Email address for alert notifications"
   type        = string
+}
+
+variable "nat_ip" {
+  description = " VM network IP"
+  type = string
 }
 
 # Make sure these existing variables are present

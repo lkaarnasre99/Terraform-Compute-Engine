@@ -11,12 +11,11 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime_check" {
   }
   
   monitored_resource {
-    type = "gce_instance"
+    type = "uptime_url"
     labels = {
-      project_id  = var.project_id
-      instance_id = var.instance_id  # This should reference your lamp-1-vm instance ID
-      zone        = var.zone
-    }
+      host = var.nat_ip
+      project = var.project_id
+          }
   }
 }
 
