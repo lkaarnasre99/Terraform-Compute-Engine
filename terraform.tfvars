@@ -1,8 +1,8 @@
 
 # Project settings
-project_id = "playground-s-11-d6872141"
-region     = "us-central1"
-zone       = "us-central1-a"
+project_id = "qwiklabs-gcp-03-4e66da73d688"
+region     = "us-west3"
+zone       = "us-west3-b"
 
 # VM settings
 instance_name = "lamp-1-vm"
