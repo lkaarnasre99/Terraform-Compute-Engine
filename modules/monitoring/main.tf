@@ -1,5 +1,5 @@
 resource "google_monitoring_uptime_check_config" "lamp_uptime_check" {
-  display_name = "Lamp Uptime Check"
+  display_name = "Lamp Uptime Check test"
   timeout      = "10s"
   period       = "60s"  # 1 minute check frequency
 
@@ -13,13 +13,29 @@ resource "google_monitoring_uptime_check_config" "lamp_uptime_check" {
     validate_ssl   = false
   }
   
-  monitored_resource {
+ /* monitored_resource {
     type = "uptime_url"
     labels = {
       host = var.nat_ip
       project = var.project_id
           }
+  }*/
+
+  monitored_resource {
+    type = "gce_instance"    # Resource Type = Instance
+    labels = {
+      instance_id = var.instance_id
+      zone = var.zone
+      project_id = var.project_id
+    }
   }
+
+  content_matchers {
+    matcher = "CONTAINS_STRING"
+    content = "OK"
+  }
+
+
 }
 
 resource "google_monitoring_alert_policy" "inbound_traffic_alert" {
