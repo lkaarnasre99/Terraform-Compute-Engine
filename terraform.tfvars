@@ -1,6 +1,6 @@
 
 # Project settings
-project_id = "playground-s-11-f66aef07"
+project_id = "playground-s-11-d6872141"
 region     = "us-central1"
 zone       = "us-central1-a"
 
