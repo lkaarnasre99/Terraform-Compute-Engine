@@ -45,7 +45,6 @@ module "monitoring" {
   nat_ip        = module.lamp_vm.instance_nat_ip
   
   cpu_threshold    = var.cpu_alert_threshold
-  memory_threshold = var.memory_alert_threshold
   network_threshold = var.network_alert_threshold
   
   notification_channels = var.notification_channels
